@@ -33,8 +33,8 @@
             label3 = new Label();
             panelLogin = new Panel();
             button1 = new Button();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
+            txtmk = new TextBox();
+            txttk = new TextBox();
             panelLogin.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,8 +79,8 @@
             panelLogin.BackColor = Color.Tan;
             panelLogin.BorderStyle = BorderStyle.FixedSingle;
             panelLogin.Controls.Add(button1);
-            panelLogin.Controls.Add(textBox2);
-            panelLogin.Controls.Add(textBox1);
+            panelLogin.Controls.Add(txtmk);
+            panelLogin.Controls.Add(txttk);
             panelLogin.Controls.Add(label1);
             panelLogin.Controls.Add(label3);
             panelLogin.Controls.Add(label2);
@@ -98,20 +98,21 @@
             button1.TabIndex = 2;
             button1.Text = "Đăng nhập";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // textBox2
+            // txtmk
             // 
-            textBox2.Location = new Point(162, 206);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(346, 27);
-            textBox2.TabIndex = 1;
+            txtmk.Location = new Point(162, 206);
+            txtmk.Name = "txtmk";
+            txtmk.Size = new Size(346, 27);
+            txtmk.TabIndex = 1;
             // 
-            // textBox1
+            // txttk
             // 
-            textBox1.Location = new Point(162, 138);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(346, 27);
-            textBox1.TabIndex = 1;
+            txttk.Location = new Point(162, 138);
+            txttk.Name = "txttk";
+            txttk.Size = new Size(346, 27);
+            txttk.TabIndex = 1;
             // 
             // dang_nhap
             // 
@@ -137,8 +138,8 @@
         private Label label2;
         private Label label3;
         private Panel panelLogin;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox txttk;
+        private TextBox txtmk;
         private Button button1;
     }
 }
