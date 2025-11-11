@@ -21,11 +21,12 @@ namespace QL_coffee_HeoThuy
         KetNoi kn= new KetNoi();
         private void dang_nhap_Load(object sender, EventArgs e)
         {
-
+            txttk.Focus();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            txttk.Focus();
             string taikhoan = txttk.Text;
             string matkhau = txtmk.Text;
             if (string.IsNullOrEmpty(taikhoan) || string.IsNullOrEmpty(matkhau))

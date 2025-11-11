@@ -38,7 +38,7 @@
             panbh = new Panel();
             label4 = new Label();
             txttk = new TextBox();
-            pansanpham = new FlowLayoutPanel();
+            flpDanhSachSanPham = new FlowLayoutPanel();
             pandanhmuc = new Panel();
             dmkem = new Panel();
             label13 = new Label();
@@ -62,6 +62,18 @@
             pantieude = new Panel();
             pantrove = new Panel();
             label14 = new Label();
+            panel2 = new Panel();
+            lblGioHangInfo = new Label();
+            label16 = new Label();
+            label17 = new Label();
+            lvGioHang = new ListView();
+            panel3 = new Panel();
+            button1 = new Button();
+            btnThanhToan = new Button();
+            TenMon = new ColumnHeader();
+            SL = new ColumnHeader();
+            DonGia = new ColumnHeader();
+            ThoiGian = new ColumnHeader();
             panel1.SuspendLayout();
             panbtnql.SuspendLayout();
             panbtnkhuvuc.SuspendLayout();
@@ -77,8 +89,11 @@
             dmcfphin.SuspendLayout();
             dmcfmay.SuspendLayout();
             dmtuychon.SuspendLayout();
+            panthanhtoan.SuspendLayout();
             pantieude.SuspendLayout();
             pantrove.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -156,7 +171,7 @@
             // 
             panbh.Controls.Add(label4);
             panbh.Controls.Add(txttk);
-            panbh.Controls.Add(pansanpham);
+            panbh.Controls.Add(flpDanhSachSanPham);
             panbh.Controls.Add(pandanhmuc);
             panbh.Controls.Add(panthanhtoan);
             panbh.Controls.Add(pantieude);
@@ -183,17 +198,18 @@
             txttk.Size = new Size(411, 27);
             txttk.TabIndex = 0;
             // 
-            // pansanpham
+            // flpDanhSachSanPham
             // 
-            pansanpham.BackColor = SystemColors.Info;
-            pansanpham.Location = new Point(285, 142);
-            pansanpham.Name = "pansanpham";
-            pansanpham.Size = new Size(583, 688);
-            pansanpham.TabIndex = 3;
+            flpDanhSachSanPham.AutoScroll = true;
+            flpDanhSachSanPham.BackColor = SystemColors.Info;
+            flpDanhSachSanPham.Location = new Point(285, 142);
+            flpDanhSachSanPham.Name = "flpDanhSachSanPham";
+            flpDanhSachSanPham.Size = new Size(631, 686);
+            flpDanhSachSanPham.TabIndex = 3;
             // 
             // pandanhmuc
             // 
-            pandanhmuc.BackColor = SystemColors.ControlDark;
+            pandanhmuc.BackColor = SystemColors.Control;
             pandanhmuc.BorderStyle = BorderStyle.FixedSingle;
             pandanhmuc.Controls.Add(dmkem);
             pandanhmuc.Controls.Add(dmdoanvat);
@@ -219,6 +235,7 @@
             dmkem.Name = "dmkem";
             dmkem.Size = new Size(277, 78);
             dmkem.TabIndex = 7;
+            dmkem.Click += NutDanhMuc_Click;
             // 
             // label13
             // 
@@ -229,6 +246,7 @@
             label13.Size = new Size(103, 26);
             label13.TabIndex = 4;
             label13.Text = "Đồ ăn vặt";
+            label13.Click += NutDanhMuc_Click;
             // 
             // dmdoanvat
             // 
@@ -239,6 +257,7 @@
             dmdoanvat.Name = "dmdoanvat";
             dmdoanvat.Size = new Size(277, 78);
             dmdoanvat.TabIndex = 6;
+            dmdoanvat.Click += NutDanhMuc_Click;
             // 
             // label12
             // 
@@ -249,6 +268,7 @@
             label12.Size = new Size(56, 26);
             label12.TabIndex = 4;
             label12.Text = "Kem";
+            label12.Click += NutDanhMuc_Click;
             // 
             // dmtrahoaqua
             // 
@@ -259,6 +279,7 @@
             dmtrahoaqua.Name = "dmtrahoaqua";
             dmtrahoaqua.Size = new Size(277, 78);
             dmtrahoaqua.TabIndex = 5;
+            dmtrahoaqua.Click += NutDanhMuc_Click;
             // 
             // label11
             // 
@@ -269,6 +290,7 @@
             label11.Size = new Size(123, 26);
             label11.TabIndex = 4;
             label11.Text = "Trà hoa quả";
+            label11.Click += NutDanhMuc_Click;
             // 
             // dmtrasua
             // 
@@ -279,6 +301,7 @@
             dmtrasua.Name = "dmtrasua";
             dmtrasua.Size = new Size(277, 78);
             dmtrasua.TabIndex = 0;
+            dmtrasua.Click += NutDanhMuc_Click;
             // 
             // label10
             // 
@@ -289,6 +312,7 @@
             label10.Size = new Size(80, 26);
             label10.TabIndex = 4;
             label10.Text = "Trà sữa";
+            label10.Click += NutDanhMuc_Click;
             // 
             // dmsinhto
             // 
@@ -299,6 +323,7 @@
             dmsinhto.Name = "dmsinhto";
             dmsinhto.Size = new Size(277, 78);
             dmsinhto.TabIndex = 4;
+            dmsinhto.Click += NutDanhMuc_Click;
             // 
             // label9
             // 
@@ -309,6 +334,7 @@
             label9.Size = new Size(79, 26);
             label9.TabIndex = 4;
             label9.Text = "Sinh tố";
+            label9.Click += NutDanhMuc_Click;
             // 
             // dmhoaqua
             // 
@@ -319,6 +345,7 @@
             dmhoaqua.Name = "dmhoaqua";
             dmhoaqua.Size = new Size(277, 78);
             dmhoaqua.TabIndex = 3;
+            dmhoaqua.Click += NutDanhMuc_Click;
             // 
             // label8
             // 
@@ -329,6 +356,7 @@
             label8.Size = new Size(142, 26);
             label8.TabIndex = 4;
             label8.Text = "Nước hoa quả";
+            label8.Click += NutDanhMuc_Click;
             // 
             // dmcfphin
             // 
@@ -339,6 +367,7 @@
             dmcfphin.Name = "dmcfphin";
             dmcfphin.Size = new Size(277, 78);
             dmcfphin.TabIndex = 2;
+            dmcfphin.Click += NutDanhMuc_Click;
             // 
             // label7
             // 
@@ -349,6 +378,7 @@
             label7.Size = new Size(123, 26);
             label7.TabIndex = 4;
             label7.Text = "Coffee phin";
+            label7.Click += NutDanhMuc_Click;
             // 
             // dmcfmay
             // 
@@ -359,6 +389,7 @@
             dmcfmay.Name = "dmcfmay";
             dmcfmay.Size = new Size(277, 78);
             dmcfmay.TabIndex = 1;
+            dmcfmay.Click += NutDanhMuc_Click;
             // 
             // label6
             // 
@@ -369,6 +400,7 @@
             label6.Size = new Size(121, 26);
             label6.TabIndex = 4;
             label6.Text = "Coffee máy";
+            label6.Click += NutDanhMuc_Click;
             // 
             // dmtuychon
             // 
@@ -392,13 +424,17 @@
             // 
             // panthanhtoan
             // 
-            panthanhtoan.BackColor = SystemColors.ControlDark;
+            panthanhtoan.BackColor = SystemColors.Control;
             panthanhtoan.BorderStyle = BorderStyle.FixedSingle;
+            panthanhtoan.Controls.Add(panel3);
+            panthanhtoan.Controls.Add(lvGioHang);
+            panthanhtoan.Controls.Add(panel2);
             panthanhtoan.Dock = DockStyle.Right;
-            panthanhtoan.Location = new Point(874, 67);
+            panthanhtoan.Location = new Point(922, 67);
             panthanhtoan.Name = "panthanhtoan";
-            panthanhtoan.Size = new Size(388, 766);
+            panthanhtoan.Size = new Size(340, 766);
             panthanhtoan.TabIndex = 1;
+            panthanhtoan.Paint += panthanhtoan_Paint;
             // 
             // pantieude
             // 
@@ -432,6 +468,115 @@
             label14.TabIndex = 0;
             label14.Text = "<";
             // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.MenuHighlight;
+            panel2.Controls.Add(label17);
+            panel2.Controls.Add(label16);
+            panel2.Controls.Add(lblGioHangInfo);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(338, 64);
+            panel2.TabIndex = 0;
+            // 
+            // lblGioHangInfo
+            // 
+            lblGioHangInfo.AutoSize = true;
+            lblGioHangInfo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            lblGioHangInfo.Location = new Point(16, 19);
+            lblGioHangInfo.Name = "lblGioHangInfo";
+            lblGioHangInfo.Size = new Size(99, 25);
+            lblGioHangInfo.TabIndex = 0;
+            lblGioHangInfo.Text = "Giỏ hàng";
+            lblGioHangInfo.Click += label15_Click;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label16.Location = new Point(113, 19);
+            label16.Name = "label16";
+            label16.Size = new Size(40, 25);
+            label16.TabIndex = 0;
+            label16.Text = "(0)";
+            label16.Click += label15_Click;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label17.Location = new Point(264, 16);
+            label17.Name = "label17";
+            label17.Size = new Size(69, 28);
+            label17.TabIndex = 0;
+            label17.Text = "( 0 đ )";
+            label17.TextAlign = ContentAlignment.MiddleRight;
+            label17.Click += label15_Click;
+            // 
+            // lvGioHang
+            // 
+            lvGioHang.Columns.AddRange(new ColumnHeader[] { TenMon, SL, DonGia, ThoiGian });
+            lvGioHang.FullRowSelect = true;
+            lvGioHang.GridLines = true;
+            lvGioHang.Location = new Point(3, 70);
+            lvGioHang.Name = "lvGioHang";
+            lvGioHang.Size = new Size(333, 380);
+            lvGioHang.TabIndex = 1;
+            lvGioHang.UseCompatibleStateImageBehavior = false;
+            lvGioHang.View = View.Details;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = SystemColors.MenuHighlight;
+            panel3.Controls.Add(btnThanhToan);
+            panel3.Controls.Add(button1);
+            panel3.Dock = DockStyle.Bottom;
+            panel3.Location = new Point(0, 691);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(338, 73);
+            panel3.TabIndex = 2;
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ActiveCaption;
+            button1.Location = new Point(171, 4);
+            button1.Name = "button1";
+            button1.Size = new Size(162, 66);
+            button1.TabIndex = 0;
+            button1.Text = "Thanh toán và xuất hóa đơn";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // btnThanhToan
+            // 
+            btnThanhToan.BackColor = SystemColors.ActiveCaption;
+            btnThanhToan.Location = new Point(3, 3);
+            btnThanhToan.Name = "btnThanhToan";
+            btnThanhToan.Size = new Size(162, 66);
+            btnThanhToan.TabIndex = 0;
+            btnThanhToan.Text = "Thanh toán";
+            btnThanhToan.UseVisualStyleBackColor = false;
+            // 
+            // TenMon
+            // 
+            TenMon.Text = "Tên món";
+            TenMon.Width = 150;
+            // 
+            // SL
+            // 
+            SL.Text = "Số lượng";
+            SL.Width = 40;
+            // 
+            // DonGia
+            // 
+            DonGia.Text = "Đơn giá";
+            DonGia.Width = 80;
+            // 
+            // ThoiGian
+            // 
+            ThoiGian.Text = "Thời gian";
+            ThoiGian.Width = 70;
+            // 
             // Kaavan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -441,6 +586,7 @@
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "Kaavan";
+            StartPosition = FormStartPosition.CenterScreen;
             Load += Kaavan_Load;
             panel1.ResumeLayout(false);
             panbtnql.ResumeLayout(false);
@@ -470,9 +616,13 @@
             dmcfmay.PerformLayout();
             dmtuychon.ResumeLayout(false);
             dmtuychon.PerformLayout();
+            panthanhtoan.ResumeLayout(false);
             pantieude.ResumeLayout(false);
             pantrove.ResumeLayout(false);
             pantrove.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -490,7 +640,7 @@
         private Panel pantieude;
         private Panel pandanhmuc;
         private TextBox txttk;
-        private FlowLayoutPanel pansanpham;
+        private FlowLayoutPanel flpDanhSachSanPham;
         private Label label4;
         private Panel dmhoaqua;
         private Panel dmcfphin;
@@ -512,5 +662,17 @@
         private Label label12;
         private Panel pantrove;
         private Label label14;
+        private Panel panel2;
+        private Label lblGioHangInfo;
+        private Label label16;
+        private Label label17;
+        private Panel panel3;
+        private Button btnThanhToan;
+        private Button button1;
+        private ListView lvGioHang;
+        private ColumnHeader TenMon;
+        private ColumnHeader SL;
+        private ColumnHeader DonGia;
+        private ColumnHeader ThoiGian;
     }
 }
