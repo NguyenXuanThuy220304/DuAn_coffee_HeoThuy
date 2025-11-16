@@ -38,20 +38,24 @@ namespace QL_coffee_HeoThuy
             {
                 kn.moKetNoi(); // Mở kết nối
 
-                // Câu query, @user và @pass là tham số để chống SQL Injection
-                string query = "SELECT LoaiTaiKhoan FROM TaiKhoan WHERE TenDangNhap = @user AND MatKhau = @pass AND TrangThai = 1";
+                // Sửa 1: Lấy cả TaiKhoanID và LoaiTaiKhoan
+                string query = "SELECT TaiKhoanID, LoaiTaiKhoan FROM TaiKhoan WHERE TenDangNhap = @user AND MatKhau = @pass AND TrangThai = 1"; // Giả sử TrangThai = 1 là "True"
 
-                // Tạo SqlCommand (từ Microsoft.Data.SqlClient)
                 SqlCommand cmd = new SqlCommand(query, kn.getConnection());
                 cmd.Parameters.AddWithValue("@user", taikhoan);
-                cmd.Parameters.AddWithValue("@pass", matkhau); // Tạm thời
+                cmd.Parameters.AddWithValue("@pass", matkhau);
 
-                // Dùng SqlDataReader để đọc kết quả
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read()) // Nếu có 1 dòng kết quả (đăng nhập đúng)
                 {
-                    string loaiTaiKhoan = reader["LoaiTaiKhoan"].ToString();
+                    // Sửa 2: LƯU VÀO PHIÊN ĐĂNG NHẬP (SESSION)
+                    PhienDangNhap.TaiKhoanID = Convert.ToInt32(reader["TaiKhoanID"]);
+                    PhienDangNhap.ChucVu = reader["LoaiTaiKhoan"].ToString();
+                    PhienDangNhap.TenDangNhap = taikhoan;
+
+                    // Lấy từ session để hiển thị
+                    string loaiTaiKhoan = PhienDangNhap.ChucVu;
                     MessageBox.Show("Đăng nhập thành công! Vai trò: " + loaiTaiKhoan, "Chào mừng");
 
                     // Mở form Trang_Chu và ẩn form này đi
