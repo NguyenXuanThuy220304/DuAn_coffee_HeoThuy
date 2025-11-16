@@ -28,57 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblTenBan = new Label();
-            lblThoiGian = new Label();
-            lblGia = new Label();
-            SuspendLayout();
+            this.lblTenBan = new System.Windows.Forms.Label();
+            this.lblThoiGian = new System.Windows.Forms.Label();
+            this.lblGia = new System.Windows.Forms.Label();
+            this.SuspendLayout();
             // 
             // lblTenBan
             // 
-            lblTenBan.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTenBan.Location = new Point(0, 14);
-            lblTenBan.Name = "lblTenBan";
-            lblTenBan.Size = new Size(179, 33);
-            lblTenBan.TabIndex = 0;
-            lblTenBan.Text = "Tên bàn";
-            lblTenBan.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblTenBan.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTenBan.Location = new System.Drawing.Point(0, 10);
+            this.lblTenBan.Name = "lblTenBan";
+            this.lblTenBan.Size = new System.Drawing.Size(150, 30);
+            this.lblTenBan.TabIndex = 0;
+            this.lblTenBan.Text = "Bàn 1";
+            this.lblTenBan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblThoiGian
             // 
-            lblThoiGian.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            lblThoiGian.Location = new Point(0, 86);
-            lblThoiGian.Name = "lblThoiGian";
-            lblThoiGian.Size = new Size(179, 38);
-            lblThoiGian.TabIndex = 0;
-            lblThoiGian.Text = "Thời gian";
-            lblThoiGian.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblThoiGian.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblThoiGian.Location = new System.Drawing.Point(0, 50);
+            this.lblThoiGian.Name = "lblThoiGian";
+            this.lblThoiGian.Size = new System.Drawing.Size(150, 30);
+            this.lblThoiGian.TabIndex = 1;
+            this.lblThoiGian.Text = "Thời gian";
+            this.lblThoiGian.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblGia
             // 
-            lblGia.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            lblGia.Location = new Point(0, 149);
-            lblGia.Name = "lblGia";
-            lblGia.Size = new Size(179, 38);
-            lblGia.TabIndex = 0;
-            lblGia.Text = "Giá";
-            lblGia.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblGia.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblGia.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblGia.Location = new System.Drawing.Point(0, 90);
+            this.lblGia.Name = "lblGia";
+            this.lblGia.Size = new System.Drawing.Size(150, 30);
+            this.lblGia.TabIndex = 2;
+            this.lblGia.Text = "Giá";
+            this.lblGia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ucTheBan
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(lblGia);
-            Controls.Add(lblThoiGian);
-            Controls.Add(lblTenBan);
-            Name = "ucTheBan";
-            Size = new Size(179, 228);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.lblGia);
+            this.Controls.Add(this.lblThoiGian);
+            this.Controls.Add(this.lblTenBan);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Name = "ucTheBan";
+            this.Size = new System.Drawing.Size(150, 130); // Kích thước mới
+            this.ResumeLayout(false);
         }
 
         #endregion
 
-        private Label lblTenBan;
-        private Label lblThoiGian;
-        private Label lblGia;
+        private System.Windows.Forms.Label lblTenBan;
+        private System.Windows.Forms.Label lblThoiGian;
+        private System.Windows.Forms.Label lblGia;
     }
 }

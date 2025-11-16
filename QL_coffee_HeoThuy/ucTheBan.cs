@@ -1,45 +1,62 @@
-﻿ using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QL_coffee_HeoThuy
 {
     public partial class ucTheBan : UserControl
     {
-        public int BanID { get; set; } // Biến này quan trọng nhất
+        public int BanID { get; set; }
         public string TrangThai { get; set; }
+        public int HoaDonID { get; set; }
+        public DateTime GioVao { get; set; }
+
         public string TenBan
         {
             get { return lblTenBan.Text; }
         }
+
         public ucTheBan()
         {
             InitializeComponent();
+
+            // "Truyền" sự kiện click từ 3 Label ra UserControl
+            this.lblTenBan.Click += (s, e) => this.OnClick(e);
+            this.lblThoiGian.Click += (s, e) => this.OnClick(e);
+            this.lblGia.Click += (s, e) => this.OnClick(e);
         }
+
+        // --- HÀM ĐÃ SỬA ---
+        // Quay lại dùng 4 tham số như logic cũ của bạn
+        // (Trong file ucTheBan.cs)
+
+        // THAY THẾ HÀM NÀY:
         public void CapNhatThongTin(string ten, string thoiGian, string gia, string trangThai)
         {
             lblTenBan.Text = ten;
-            lblThoiGian.Text = thoiGian;
-            lblGia.Text = gia;
             this.TrangThai = trangThai;
 
-            // Đổi màu dựa trên trạng thái
             if (trangThai == "Trống")
             {
-                this.BackColor = Color.SkyBlue; // Màu bàn trống
+                // 1. Ẩn 2 label
+                lblThoiGian.Visible = false;
+                lblGia.Visible = false;
+
+                // 2. Đổi màu (màu xanh nhạt)
+                this.BackColor = System.Drawing.Color.FromArgb(204, 229, 255);
             }
-            else
+            else // "Có khách"
             {
-                this.BackColor = Color.Orange; // Màu bàn có khách
+                // 1. Gán giá trị và HIỆN 2 label
+                lblThoiGian.Text = thoiGian;
+                lblGia.Text = gia;
+                lblThoiGian.Visible = true;
+                lblGia.Visible = true;
+
+                // 2. Đổi màu (màu cam nhạt)
+                this.BackColor = System.Drawing.Color.FromArgb(255, 213, 153);
+                lblGia.ForeColor = Color.DarkRed;
             }
         }
     }
 }
-    
-
