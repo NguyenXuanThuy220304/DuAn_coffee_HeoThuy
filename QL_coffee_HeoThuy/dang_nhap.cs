@@ -1,76 +1,85 @@
-﻿    using Microsoft.Data.SqlClient;
-    using System;
-    using System.Windows.Forms;
+﻿using Microsoft.Data.SqlClient;
+using System;
+using System.Windows.Forms;
 
-    namespace QL_coffee_HeoThuy
+namespace QL_coffee_HeoThuy
+{
+    public partial class dang_nhap : Form
     {
-        public partial class dang_nhap : Form
+        // Giả sử bạn có class KetNoi.cs
+        KetNoi kn = new KetNoi();
+
+        public dang_nhap()
         {
-            public dang_nhap()
-            {
-                InitializeComponent();
+            // Chỉ gọi hàm InitializeComponent (không định nghĩa)
+            InitializeComponent();
+        }
 
+        private void dang_nhap_Load(object sender, EventArgs e)
+        {
+            txttk.Focus();
+        }
+
+        // Đây là sự kiện click của nút "Đăng nhập"
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txttk.Focus();
+            string taikhoan = txttk.Text;
+            string matkhau = txtmk.Text;
+            if (string.IsNullOrEmpty(taikhoan) || string.IsNullOrEmpty(matkhau))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo");
+                return;
             }
-            KetNoi kn= new KetNoi();
-            private void dang_nhap_Load(object sender, EventArgs e)
+            try
             {
-                txttk.Focus();
-            }
+                kn.moKetNoi();
 
-            private void button1_Click(object sender, EventArgs e)
-            {
-                txttk.Focus();
-                string taikhoan = txttk.Text;
-                string matkhau = txtmk.Text;
-                if (string.IsNullOrEmpty(taikhoan) || string.IsNullOrEmpty(matkhau))
+                // Lấy TaiKhoanID, LoaiTaiKhoan, và MaCa
+                string query = "SELECT TaiKhoanID, LoaiTaiKhoan, MaCa FROM TaiKhoan WHERE TenDangNhap = @user AND MatKhau = @pass AND TrangThai = 1";
+
+                SqlCommand cmd = new SqlCommand(query, kn.getConnection());
+                cmd.Parameters.AddWithValue("@user", taikhoan);
+                cmd.Parameters.AddWithValue("@pass", matkhau);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo");
-                    return;
-                }
-                try
-                {
-                    kn.moKetNoi(); // Mở kết nối
+                    // === LƯU VÀO PHIÊN ĐĂNG NHẬP (SESSION) ===
+                    PhienDangNhap.TaiKhoanID = Convert.ToInt32(reader["TaiKhoanID"]);
+                    PhienDangNhap.ChucVu = reader["LoaiTaiKhoan"].ToString();
+                    PhienDangNhap.TenDangNhap = taikhoan;
 
-                    // Sửa 1: Lấy cả TaiKhoanID và LoaiTaiKhoan
-                    string query = "SELECT TaiKhoanID, LoaiTaiKhoan FROM TaiKhoan WHERE TenDangNhap = @user AND MatKhau = @pass AND TrangThai = 1"; // Giả sử TrangThai = 1 là "True"
-
-                    SqlCommand cmd = new SqlCommand(query, kn.getConnection());
-                    cmd.Parameters.AddWithValue("@user", taikhoan);
-                    cmd.Parameters.AddWithValue("@pass", matkhau);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read()) // Nếu có 1 dòng kết quả (đăng nhập đúng)
+                    if (reader["MaCa"] != DBNull.Value)
                     {
-                        // Sửa 2: LƯU VÀO PHIÊN ĐĂNG NHẬP (SESSION)
-                        PhienDangNhap.TaiKhoanID = Convert.ToInt32(reader["TaiKhoanID"]);
-                        PhienDangNhap.ChucVu = reader["LoaiTaiKhoan"].ToString();
-                        PhienDangNhap.TenDangNhap = taikhoan;
-
-                        // Lấy từ session để hiển thị
-                        string loaiTaiKhoan = PhienDangNhap.ChucVu;
-                        MessageBox.Show("Đăng nhập thành công! Vai trò: " + loaiTaiKhoan, "Chào mừng");
-
-                        // Mở form Trang_Chu và ẩn form này đi
-                        Kaavan f_main = new Kaavan();
-                        f_main.Show();
-                        this.Hide();
+                        PhienDangNhap.MaCa = Convert.ToInt32(reader["MaCa"]);
                     }
-                    else // Nếu không có dòng nào (sai user hoặc pass)
+                    else
                     {
-                        MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu.", "Lỗi");
+                        PhienDangNhap.MaCa = 0; // 0 = Quản lý
                     }
 
-                    reader.Close(); // Đóng reader
+                    MessageBox.Show("Đăng nhập thành công! Vai trò: " + PhienDangNhap.ChucVu, "Chào mừng");
+
+                    Kaavan f_main = new Kaavan();
+                    f_main.Show();
+                    this.Hide();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Lỗi truy vấn: " + ex.Message, "Lỗi");
+                    MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu.", "Lỗi");
                 }
-                finally
-                {
-                    kn.dongKetNoi(); // Luôn đóng kết nối
-                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi truy vấn: " + ex.Message, "Lỗi");
+            }
+            finally
+            {
+                kn.dongKetNoi();
             }
         }
     }
+}

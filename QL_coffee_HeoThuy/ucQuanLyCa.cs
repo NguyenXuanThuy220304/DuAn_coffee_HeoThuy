@@ -1,173 +1,182 @@
-﻿namespace QL_coffee_HeoThuy
+﻿using Microsoft.Data.SqlClient;
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace QL_coffee_HeoThuy
 {
-    partial class dang_nhap
+    // ĐẢM BẢO BẠN CÓ DÒNG NÀY ( : UserControl )
+    public partial class ucQuanLyCa : UserControl
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        // Sự kiện (event) để báo cho Form Kaavan
+        public event EventHandler GoBack;
+        public event EventHandler ViewShiftListClicked;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        private string chuoiKetNoi = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=QL_coffee;Integrated Security=True;Encrypt=False";
+
+        private int idCaLamViecHienTai = -1;
+        private DateTime thoiGianBatDauCa;
+
+        public ucQuanLyCa()
         {
-            if (disposing && (components != null))
+            InitializeComponent(); // Dòng này gọi file .Designer.cs
+
+            // Gán sự kiện click cho các nút
+            btnBack.Click += btnBack_Click;
+            btnDongCa.Click += btnDongCa_Click;
+            btnXemDanhSach.Click += btnXemDanhSach_Click;
+        }
+
+        // Nút quay lại '<-'
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Nút "Xem danh sách ca"
+        private void btnXemDanhSach_Click(object sender, EventArgs e)
+        {
+            ViewShiftListClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Hàm này được Kaavan/ucThuocTinh gọi để tải dữ liệu
+        public void LoadData()
+        {
+            HienThiThongTinCa();
+            LayDonHangTrongCa();
+        }
+
+        // Tải thông tin ca hiện tại (Logic Mở/Đóng)
+        private void HienThiThongTinCa()
+        {
+            string query = @"
+                SELECT TOP 1 c.CaLamViecID, c.MaCa, c.ThoiGianBatDau, t.HoTen, t.TenDangNhap
+                FROM CaLamViec AS c
+                JOIN TaiKhoan AS t ON c.TaiKhoanID = t.TaiKhoanID
+                WHERE c.ThoiGianKetThuc IS NULL 
+                ORDER BY c.ThoiGianBatDau DESC";
+
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                components.Dispose();
+                try
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        // === CA ĐANG MỞ ===
+                        this.idCaLamViecHienTai = Convert.ToInt32(reader["CaLamViecID"]);
+                        this.thoiGianBatDauCa = Convert.ToDateTime(reader["ThoiGianBatDau"]);
+
+                        lblMaCa.Text = reader["MaCa"].ToString();
+                        lblTenNhanVien.Text = reader["HoTen"].ToString();
+                        lblEmailNhanVien.Text = reader["TenDangNhap"].ToString();
+                        lblGioMoCa.Text = this.thoiGianBatDauCa.ToString("dd thg MM, yyyy, HH:mm");
+                        lblGioDongCa.Text = "Đang mở";
+
+                        btnDongCa.Text = "Đóng ca";
+                        btnDongCa.Enabled = true;
+
+                        tabControlMain.Visible = true;
+                        btnXemDanhSach.Enabled = true;
+                        
+                    }
+                    else
+                    {
+                        // === KHÔNG CÓ CA MỞ ===
+                        this.idCaLamViecHienTai = -1;
+
+                        lblMaCa.Text = "N/A";
+                        lblTenNhanVien.Text = "N/A";
+                        lblEmailNhanVien.Text = "N/A";
+                        lblGioMoCa.Text = "Chưa mở ca";
+                        lblGioDongCa.Text = "Chưa mở ca";
+
+                        btnDongCa.Text = "Mở ca";
+                        btnDongCa.Enabled = true;
+
+                        tabControlMain.Visible = false;
+                        btnXemDanhSach.Enabled = false;
+                        
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải thông tin ca: " + ex.Message);
+                }
             }
-            base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+        // Tải danh sách đơn hàng vào DataGridView
+        private void LayDonHangTrongCa()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            panelLogin = new Panel();
-            picLogo = new PictureBox(); // Thêm PictureBox
-            button1 = new Button();
-            txtmk = new TextBox();
-            txttk = new TextBox();
-            panelLogin.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(picLogo)).BeginInit();
-            SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 190);
-            label1.Name = "label1";
-            label1.RightToLeft = RightToLeft.No;
-            label1.Size = new Size(400, 50);
-            label1.TabIndex = 0;
-            label1.Text = "ĐĂNG NHẬP";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(46, 250);
-            label2.Name = "label2";
-            label2.RightToLeft = RightToLeft.No;
-            label2.Size = new Size(116, 23);
-            label2.TabIndex = 0;
-            label2.Text = "Tên đăng nhập";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(46, 320);
-            label3.Name = "label3";
-            label3.RightToLeft = RightToLeft.No;
-            label3.Size = new Size(82, 23);
-            label3.TabIndex = 0;
-            label3.Text = "Mật khẩu";
-            // 
-            // panelLogin
-            // 
-            // Đổi màu nền cho đồng bộ
-            panelLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(62)))), ((int)(((byte)(81)))));
-            panelLogin.BorderStyle = BorderStyle.FixedSingle;
-            panelLogin.Controls.Add(picLogo);
-            panelLogin.Controls.Add(button1);
-            panelLogin.Controls.Add(txtmk);
-            panelLogin.Controls.Add(txttk);
-            panelLogin.Controls.Add(label1);
-            panelLogin.Controls.Add(label3);
-            panelLogin.Controls.Add(label2);
-            panelLogin.ImeMode = ImeMode.NoControl;
-            // Căn giữa panel
-            panelLogin.Location = new Point(191, 52);
-            panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(400, 450);
-            panelLogin.TabIndex = 1;
-            // 
-            // picLogo
-            // 
-            picLogo.Image = Properties.Resources.logo1; // Lấy logo từ Resources
-            picLogo.Location = new Point(125, 30);
-            picLogo.Name = "picLogo";
-            picLogo.Size = new Size(150, 150);
-            picLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            picLogo.TabIndex = 3;
-            picLogo.TabStop = false;
-            // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.MenuHighlight;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(50, 400);
-            button1.Name = "button1";
-            button1.Size = new Size(300, 45);
-            button1.TabIndex = 2;
-            button1.Text = "Đăng nhập";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            // txtmk
-            // 
-            txtmk.Font = new Font("Segoe UI", 12F);
-            txtmk.Location = new Point(50, 345);
-            txtmk.Name = "txtmk";
-            txtmk.PasswordChar = '*'; // Thêm ký tự che mật khẩu
-            txtmk.Size = new Size(300, 34);
-            txtmk.TabIndex = 1;
-            // 
-            // txttk
-            // 
-            txttk.Font = new Font("Segoe UI", 12F);
-            txttk.Location = new Point(50, 275);
-            txttk.Name = "txttk";
-            txttk.Size = new Size(300, 34);
-            txttk.TabIndex = 0; // Đổi TabIndex
-            // 
-            // dang_nhap
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            // Đổi màu nền Form
-            BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(52)))), ((int)(((byte)(71)))));
-            // Bỏ ảnh nền
-            // BackgroundImage = Properties.Resources.back;
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(783, 554);
-            Controls.Add(panelLogin);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow; // Cửa sổ gọn gàng
-            Name = "dang_nhap";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Đăng nhập Kaavan Coffee";
-            Load += dang_nhap_Load;
-            panelLogin.ResumeLayout(false);
-            panelLogin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(picLogo)).EndInit();
-            ResumeLayout(false);
+            if (this.idCaLamViecHienTai == -1)
+            {
+                dgvDonHang.DataSource = null; // Xóa lưới
+                return;
+            }
+
+            string query = @"
+                SELECT HoaDonID, GioVao, GioRa, TongTien
+                FROM HoaDon
+                WHERE TrangThai = 1 AND GioVao >= @ThoiGianBatDau";
+
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@ThoiGianBatDau", this.thoiGianBatDauCa);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                dgvDonHang.DataSource = dt;
+
+                dgvDonHang.Columns["HoaDonID"].HeaderText = "Mã HĐ";
+                dgvDonHang.Columns["GioVao"].HeaderText = "Giờ vào";
+                dgvDonHang.Columns["GioRa"].HeaderText = "Giờ ra";
+                dgvDonHang.Columns["TongTien"].HeaderText = "Tổng tiền";
+            }
         }
 
-        #endregion
+        // Nút "Đóng ca" / "Mở ca"
+        private void btnDongCa_Click(object sender, EventArgs e)
+        {
+            if (btnDongCa.Text == "Đóng ca")
+            {
+                if (this.idCaLamViecHienTai == -1) return;
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đóng ca này?",
+                                                      "Xác nhận",
+                                                      MessageBoxButtons.YesNo,
+                                                      MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    DongCaTrongCSDL();
+                    MessageBox.Show("Đã đóng ca thành công!");
+                    LoadData();
+                }
+            }
+            else // Nếu nút đang là "Mở ca"
+            {
+                frmMoCa formMoCa = new frmMoCa();
+                formMoCa.ShowDialog();
+                LoadData();
+            }
+        }
 
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Panel panelLogin;
-        private TextBox txttk;
-        private TextBox txtmk;
-        private Button button1;
-        private PictureBox picLogo; // Khai báo PictureBox
+        // Hàm CSDL để đóng ca
+        private void DongCaTrongCSDL()
+        {
+            string query = "UPDATE CaLamViec SET ThoiGianKetThuc = @GioDong WHERE CaLamViecID = @CaID";
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@GioDong", DateTime.Now);
+                cmd.Parameters.AddWithValue("@CaID", this.idCaLamViecHienTai);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
