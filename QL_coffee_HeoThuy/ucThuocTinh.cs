@@ -13,6 +13,8 @@ namespace QL_coffee_HeoThuy
         public event EventHandler ManageShiftClicked;
         public event EventHandler LoggedOut;
         public event EventHandler ChuongTrinhBanHangClicked; // <<< SỰ KIỆN MỚI
+        public event EventHandler ThucDonClicked;
+        public event EventHandler BaoCaoClicked;
         public ucThuocTinh()
         {
             InitializeComponent();
@@ -29,6 +31,8 @@ namespace QL_coffee_HeoThuy
             // (Tên Label bên trong 'panTaoTaiKhoan')
             // labelTaoTaiKhoan.Click += (s, e) => panTaoTaiKhoan_Click(s, e);
             panChuongTrinh.Click += panChuongTrinh_Click;
+            panThucDon.Click += panThucDon_Click;
+            panBaoCao.Click += panBaoCao_Click;
         }
 
         // Hàm này public để Kaavan.cs có thể gọi
@@ -171,6 +175,21 @@ namespace QL_coffee_HeoThuy
         {
             // Bắn sự kiện lên Form Kaavan
             ChuongTrinhBanHangClicked?.Invoke(this, EventArgs.Empty);
+        }
+        private void panThucDon_Click(object sender, EventArgs e)
+        {
+            // Bắn sự kiện lên Form Kaavan
+            ThucDonClicked?.Invoke(this, EventArgs.Empty);
+        }
+        private void panBaoCao_Click(object sender, EventArgs e)
+        {
+            // Bắn sự kiện lên Form Kaavan
+            BaoCaoClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -7,82 +7,140 @@ namespace QL_coffee_HeoThuy
 {
     public partial class ucChuongTrinh : UserControl
     {
-        // Sự kiện (event) để báo cho Form Kaavan là "Tôi đã xong, hãy quay lại"
         public event EventHandler GoBack;
 
         private string chuoiKetNoi = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=QL_coffee;Integrated Security=True;Encrypt=False";
+
+        // Biến để lưu trạng thái đang chọn
+        private string loaiChuongTrinhHienTai = "Khuyến mãi";
 
         public ucChuongTrinh()
         {
             InitializeComponent();
 
-            // Gán sự kiện
             btnBack.Click += btnBack_Click;
             btnTaoMoi.Click += btnTaoMoi_Click;
 
             // Gán sự kiện cho các nút điều hướng bên trái
-            lblKhuyenMai.Click += (s, e) => LoadChuongTrinh("Khuyến mãi");
-            lblCombo.Click += (s, e) => LoadChuongTrinh("Combo");
-            lblGiamGia.Click += (s, e) => LoadChuongTrinh("Giảm giá");
+            lblKhuyenMai.Click += (s, e) => ChonLoaiChuongTrinh("Khuyến mãi");
+            lblCombo.Click += (s, e) => ChonLoaiChuongTrinh("Combo");
+            lblGiamGia.Click += (s, e) => ChonLoaiChuongTrinh("Giảm giá");
             // (Thêm cho các nút khác...)
         }
 
-        // Nút quay lại '<-'
         private void btnBack_Click(object sender, EventArgs e)
         {
-            // Bắn sự kiện "GoBack" lên Form Kaavan
             GoBack?.Invoke(this, EventArgs.Empty);
         }
 
-        // Hàm này được Kaavan gọi khi UC này được hiển thị
         public void LoadData()
         {
             // Mặc định tải mục "Chương trình khuyến mãi"
-            LoadChuongTrinh("Khuyến mãi");
+            ChonLoaiChuongTrinh("Khuyến mãi");
         }
 
-        // Tải dữ liệu vào ListView dựa trên danh mục
-        private void LoadChuongTrinh(string loaiChuongTrinh)
+        // HÀM MỚI: Xử lý khi chọn loại chương trình
+        private void ChonLoaiChuongTrinh(string loai)
         {
-            // (Vì CSDL của bạn chưa có bảng KhuyenMai,
-            // chúng ta sẽ dùng dữ liệu giả lập (dummy data) giống ảnh mẫu)
-
+            this.loaiChuongTrinhHienTai = loai; // Lưu lại
             lvChuongTrinh.Items.Clear();
 
-            if (loaiChuongTrinh == "Khuyến mãi")
+            // Cập nhật giao diện
+            if (loai == "Khuyến mãi")
             {
                 lblTitle.Text = "Chương trình khuyến mãi";
                 btnTaoMoi.Text = "Tạo CT khuyến mãi";
-
-                // Thêm dữ liệu giả lập
-                var item1 = new ListViewItem("ĐỒNG GIÁ 25K - GAMUDA CS5");
-                item1.SubItems.Add("giảm giá 100%");
-                lvChuongTrinh.Items.Add(item1);
-
-                var item2 = new ListViewItem("GIẢM 100%");
-                item2.SubItems.Add("giảm 100%");
-                lvChuongTrinh.Items.Add(item2);
             }
-            else if (loaiChuongTrinh == "Combo")
+            else if (loai == "Combo")
             {
                 lblTitle.Text = "Combo";
                 btnTaoMoi.Text = "Tạo Combo";
-                // (Thêm dữ liệu giả lập cho Combo)
             }
-            else if (loaiChuongTrinh == "Giảm giá")
+            else if (loai == "Giảm giá")
             {
                 lblTitle.Text = "Giảm giá";
                 btnTaoMoi.Text = "Tạo giảm giá";
-                // (Thêm dữ liệu giả lập cho Giảm giá)
             }
             // (Thêm các 'else if' cho các mục khác...)
+
+            // Tải dữ liệu từ CSDL
+            LoadDataFromDatabase(loai);
         }
 
-        // Nút "Tạo..."
+        // HÀM SỬA: Tải dữ liệu từ CSDL
+        private void LoadDataFromDatabase(string loaiChuongTrinh)
+        {
+            lvChuongTrinh.Items.Clear();
+            string query = "";
+            bool laCombo = false;
+
+            if (loaiChuongTrinh == "Khuyến mãi" || loaiChuongTrinh == "Giảm giá")
+            {
+                query = "SELECT TenChuongTrinh, ChiTiet FROM KhuyenMai WHERE LoaiChuongTrinh = @Loai AND TrangThai = 1";
+            }
+            else if (loaiChuongTrinh == "Combo")
+            {
+                query = "SELECT TenCombo, TongGia FROM Combo WHERE TrangThai = 1";
+                laCombo = true;
+            }
+            else
+            {
+                return; // Không làm gì
+            }
+
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@Loai", loaiChuongTrinh);
+                try
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        ListViewItem item = new ListViewItem(reader[0].ToString()); // TenChuongTrinh or TenCombo
+
+                        if (laCombo)
+                        {
+                            item.SubItems.Add(Convert.ToDecimal(reader[1]).ToString("N0") + " đ"); // TongGia
+                        }
+                        else
+                        {
+                            item.SubItems.Add(reader[1].ToString()); // ChiTiet
+                        }
+                        lvChuongTrinh.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải danh sách: " + ex.Message);
+                }
+            }
+        }
+
+        // HÀM SỬA: Nút "Tạo..."
         private void btnTaoMoi_Click(object sender, EventArgs e)
         {
-            // (Sau này, bạn sẽ mở một Form mới 'frmTaoKhuyenMai' tại đây)
-            MessageBox.Show("Mở Form tạo mới...");
+            // Mở form tương ứng dựa trên trạng thái đã lưu
+            switch (this.loaiChuongTrinhHienTai)
+            {
+                case "Khuyến mãi":
+                    frmTaoKhuyenMai frmKM = new frmTaoKhuyenMai();
+                    frmKM.ShowDialog();
+                    break;
+                case "Combo":
+                    frmTaoCombo frmCB = new frmTaoCombo();
+                    frmCB.ShowDialog();
+                    break;
+                case "Giảm giá":
+                    // SỬA Ở ĐÂY: Mở form mới
+                    frmTaoGiamGia frmGG = new frmTaoGiamGia();
+                    frmGG.ShowDialog();
+                    break;
+            }
+
+            // Tải lại danh sách sau khi Form tạo mới đóng lại
+            LoadDataFromDatabase(this.loaiChuongTrinhHienTai);
         }
     }
 }

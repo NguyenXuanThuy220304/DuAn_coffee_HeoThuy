@@ -23,6 +23,8 @@ namespace QL_coffee_HeoThuy
         ucQuanLyCa ucQuanLyCa1;
         ucThongTinCacCa ucThongTinCacCa1; // Thêm UserControl danh sách ca
         ucChuongTrinh ucChuongTrinh1;
+        ucQuanLyThucDon ucQuanLyThucDon1;
+        ucBaoCao ucBaoCao1;
         public Kaavan()
         {
             InitializeComponent();
@@ -34,6 +36,8 @@ namespace QL_coffee_HeoThuy
             ucQuanLyCa1 = new ucQuanLyCa();
             ucThongTinCacCa1 = new ucThongTinCacCa();
             ucChuongTrinh1 = new ucChuongTrinh();
+            ucQuanLyThucDon1 = new ucQuanLyThucDon();
+            ucBaoCao1 = new ucBaoCao();
 
             // 3. Cài đặt Dock
             ucBanHang1.Dock = DockStyle.Fill;
@@ -42,6 +46,8 @@ namespace QL_coffee_HeoThuy
             ucQuanLyCa1.Dock = DockStyle.Fill;
             ucThongTinCacCa1.Dock = DockStyle.Fill;
             ucChuongTrinh1.Dock = DockStyle.Fill;
+            ucQuanLyThucDon1.Dock = DockStyle.Fill;
+            ucBaoCao1.Dock = DockStyle.Fill;
             // 4. Thêm vào 'panuc'
             panuc.Controls.Add(ucBanHang1);
             panuc.Controls.Add(ucKhuVuc1);
@@ -49,6 +55,8 @@ namespace QL_coffee_HeoThuy
             panuc.Controls.Add(ucQuanLyCa1);
             panuc.Controls.Add(ucThongTinCacCa1);
             panuc.Controls.Add(ucChuongTrinh1);
+            panuc.Controls.Add(ucQuanLyThucDon1);
+            panuc.Controls.Add(ucBaoCao1);
             // 5. Đăng ký sự kiện
             ucKhuVuc1.TableSelected += UcKhuVuc_TableSelected;
             ucBanHang1.GoBack += UcBanHang_GoBack;
@@ -60,6 +68,10 @@ namespace QL_coffee_HeoThuy
             ucThuocTinh1.LoggedOut += UcThuocTinh_LoggedOut;
             ucThuocTinh1.ChuongTrinhBanHangClicked += UcThuocTinh_ChuongTrinhBanHangClicked;
             ucChuongTrinh1.GoBack += UcChuongTrinh_GoBack;
+            ucThuocTinh1.ThucDonClicked += UcThuocTinh_ThucDonClicked;
+            ucQuanLyThucDon1.GoBack += UcQuanLyThucDon_GoBack;
+            ucThuocTinh1.BaoCaoClicked += UcThuocTinh_BaoCaoClicked;
+            ucBaoCao1.GoBack += UcBaoCao_GoBack;
         }
 
         private void Kaavan_Load(object sender, EventArgs e)
@@ -162,6 +174,32 @@ namespace QL_coffee_HeoThuy
 
         // Khi ucChuongTrinh báo "Quay lại"
         private void UcChuongTrinh_GoBack(object sender, EventArgs e)
+        {
+            ucThuocTinh1.HienThiDuLieu(); // Tải lại ucThuocTinh
+            ucThuocTinh1.BringToFront(); // Quay về ucThuocTinh
+        }
+        // Khi ucThuocTinh báo "Mở Thực đơn"
+        private void UcThuocTinh_ThucDonClicked(object sender, EventArgs e)
+        {
+            ucQuanLyThucDon1.LoadData();
+            ucQuanLyThucDon1.BringToFront();
+        }
+
+        // Khi ucQuanLyThucDon báo "Quay lại"
+        private void UcQuanLyThucDon_GoBack(object sender, EventArgs e)
+        {
+            ucThuocTinh1.HienThiDuLieu(); // Tải lại ucThuocTinh
+            ucThuocTinh1.BringToFront(); // Quay về ucThuocTinh
+        }
+        // Khi ucThuocTinh báo "Mở Báo cáo"
+        private void UcThuocTinh_BaoCaoClicked(object sender, EventArgs e)
+        {
+            ucBaoCao1.LoadData();
+            ucBaoCao1.BringToFront();
+        }
+
+        // Khi ucBaoCao báo "Quay lại"
+        private void UcBaoCao_GoBack(object sender, EventArgs e)
         {
             ucThuocTinh1.HienThiDuLieu(); // Tải lại ucThuocTinh
             ucThuocTinh1.BringToFront(); // Quay về ucThuocTinh

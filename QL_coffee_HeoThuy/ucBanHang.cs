@@ -37,6 +37,7 @@ namespace QL_coffee_HeoThuy
             this.btnXoaMon.Click += btnXoaMon_Click;
             this.btnTangSL.Click += btnTangSL_Click;
             this.btnGiamSL.Click += btnGiamSL_Click;
+            this.cbGiamGia.SelectedIndexChanged += new System.EventHandler(this.cbGiamGia_SelectedIndexChanged);
         }
 
         // Hàm này public để Kaavan.cs có thể gọi
@@ -49,7 +50,8 @@ namespace QL_coffee_HeoThuy
 
             lblTenBanHienTai.Text = this.tenBanDangChon;
             lblThoiGianVao.Text = this.thoiGianMoBan.ToString("dd/MM/yyyy HH:mm");
-
+            LoadDanhSachGiamGia(); // Tải danh sách
+            cbGiamGia.SelectedIndex = 0; // Chọn "(Không áp dụng)"
             TaiLaiMonDaGoi(this.idHoaDonHienTai);
             TaiSanPhamLenPanel("Coffee máy");
         }
@@ -143,10 +145,17 @@ namespace QL_coffee_HeoThuy
                 item.Tag = newChiTietID;
                 lvGioHang.Items.Add(item);
             }
-            this.tongTienHienTai = CapNhatTongTienHoaDon(this.idHoaDonHienTai);
-            CapNhatGiaoDienTongTien();
+            TinhToanHoaDon();
         }
-
+        // (Bên trong class ucBanHang)
+        private void cbGiamGia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Khi đổi giảm giá, tính lại toàn bộ hóa đơn
+            if (this.idHoaDonHienTai != -1) // Chỉ tính khi có hóa đơn
+            {
+                TinhToanHoaDon();
+            }
+        }
         private void btnTangSL_Click(object sender, EventArgs e)
         {
             if (lvGioHang.SelectedItems.Count == 0) return;
@@ -157,8 +166,7 @@ namespace QL_coffee_HeoThuy
             CapNhatSoLuong(chiTietID, soLuongMoi);
             item.SubItems[1].Text = soLuongMoi.ToString();
             item.SubItems[3].Text = DateTime.Now.ToString("HH:mm");
-            this.tongTienHienTai = CapNhatTongTienHoaDon(this.idHoaDonHienTai);
-            CapNhatGiaoDienTongTien();
+            TinhToanHoaDon();
         }
 
         private void btnGiamSL_Click(object sender, EventArgs e)
@@ -175,8 +183,7 @@ namespace QL_coffee_HeoThuy
                 CapNhatSoLuong(chiTietID, soLuongMoi);
                 item.SubItems[1].Text = soLuongMoi.ToString();
                 item.SubItems[3].Text = DateTime.Now.ToString("HH:mm");
-                this.tongTienHienTai = CapNhatTongTienHoaDon(this.idHoaDonHienTai);
-                CapNhatGiaoDienTongTien();
+                TinhToanHoaDon();
             }
         }
 
@@ -188,8 +195,7 @@ namespace QL_coffee_HeoThuy
 
             XoaMonKhoiCSDL(chiTietID);
             lvGioHang.Items.Remove(item);
-            this.tongTienHienTai = CapNhatTongTienHoaDon(this.idHoaDonHienTai);
-            CapNhatGiaoDienTongTien();
+            TinhToanHoaDon();
 
             if (lvGioHang.Items.Count == 0)
             {
@@ -225,9 +231,12 @@ namespace QL_coffee_HeoThuy
         }
 
         // === CÁC HÀM GIAO DIỆN PHỤ ===
-        private void CapNhatGiaoDienTongTien()
+        // (Bên trong class ucBanHang)
+        // THAY THẾ HÀM NÀY:
+        // === THAY THẾ HÀM NÀY ===
+        private void CapNhatGiaoDienTongTien(decimal tongCong)
         {
-            string giaText = this.tongTienHienTai.ToString("N0") + " đ";
+            string giaText = tongCong.ToString("N0") + " đ";
             int soLuongMon = 0;
             foreach (ListViewItem item in lvGioHang.Items)
             {
@@ -240,7 +249,7 @@ namespace QL_coffee_HeoThuy
         {
             lvGioHang.Items.Clear();
             this.tongTienHienTai = 0;
-            CapNhatGiaoDienTongTien();
+            TinhToanHoaDon();
         }
 
         // === CÁC HÀM CSDL ===
@@ -375,7 +384,7 @@ namespace QL_coffee_HeoThuy
                     this.tongTienHienTai += (donGia * soLuong);
                 }
             }
-            CapNhatGiaoDienTongTien();
+            TinhToanHoaDon();
         }
         private void XoaMonKhoiCSDL(int chiTietID)
         {
@@ -413,13 +422,148 @@ namespace QL_coffee_HeoThuy
                 cmd.ExecuteNonQuery();
             }
         }
+        // (Bên trong class ucBanHang)
 
+        // Hàm mới: Tải tất cả CT Khuyến mãi và Giảm giá
+        private void LoadDanhSachGiamGia()
+        {
+            var danhSach = new List<GiamGia>();
+            danhSach.Add(new GiamGia { ID = 0, TenHienThi = "(Không áp dụng)", ChiTiet = "0" });
+
+            string query = "SELECT KhuyenMaiID, TenChuongTrinh, ChiTiet, LoaiChuongTrinh FROM KhuyenMai WHERE TrangThai = 1";
+
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        danhSach.Add(new GiamGia
+                        {
+                            ID = Convert.ToInt32(reader["KhuyenMaiID"]),
+                            TenHienThi = reader["TenChuongTrinh"].ToString(),
+                            ChiTiet = reader["ChiTiet"].ToString(),
+                            Loai = reader["LoaiChuongTrinh"].ToString()
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải danh sách giảm giá: " + ex.Message);
+                }
+            }
+            cbGiamGia.DataSource = danhSach;
+            cbGiamGia.DisplayMember = "TenHienThi";
+        }
+        // (Bên trong class ucBanHang)
+
+        // HÀM MỚI: Tính toán lại toàn bộ tiền
+        // === DÁN HÀM MỚI NÀY ===
+        private void TinhToanHoaDon()
+        {
+            // 1. Lấy tổng tiền món ăn (Tạm tính)
+            decimal tamTinh = CapNhatTongTienHoaDon(this.idHoaDonHienTai);
+
+            // 2. Lấy thông tin giảm giá
+            GiamGia giamChon = cbGiamGia.SelectedItem as GiamGia;
+            decimal soTienGiam = 0;
+
+            if (giamChon != null && giamChon.ID != 0)
+            {
+                string chiTiet = giamChon.ChiTiet;
+                try
+                {
+                    if (chiTiet.Contains("%")) // Case 1: Giảm theo %
+                    {
+                        decimal phanTram = decimal.Parse(chiTiet.Replace("%", ""));
+                        soTienGiam = tamTinh * (phanTram / 100);
+                    }
+                    else if (giamChon.Loai == "Combo") // Case 2: Combo (Đồng giá)
+                    {
+                        decimal giaDong = decimal.Parse(chiTiet);
+                        int soLuongMon = lvGioHang.Items.Cast<ListViewItem>().Sum(item => int.Parse(item.SubItems[1].Text));
+                        soTienGiam = tamTinh - (soLuongMon * giaDong);
+                        if (soTienGiam < 0) soTienGiam = 0; // Đảm bảo không giảm âm
+                    }
+                    else // Case 3: Giảm tiền trực tiếp (VND)
+                    {
+                        soTienGiam = decimal.Parse(chiTiet);
+                    }
+                }
+                catch (Exception ex) { soTienGiam = 0; }
+            }
+
+            // 3. Tính tổng cuối cùng
+            decimal tongCong = tamTinh - soTienGiam;
+            if (tongCong < 0) tongCong = 0;
+
+            // 4. Lưu vào biến toàn cục
+            this.tongTienHienTai = tongCong;
+
+            // 5. Cập nhật giao diện
+            // (Bạn cần tạo 3 Label: lblTamTinh, lblGiamGia, lblTongCong)
+            // lblTamTinh.Text = tamTinh.ToString("N0") + " đ";
+            // lblGiamGia.Text = soTienGiam.ToString("N0") + " đ";
+            // lblTongCong.Text = tongCong.ToString("N0") + " đ";
+
+            // Cập nhật Header + Nút Thanh toán
+            CapNhatGiaoDienTongTien(tongCong); // Gọi hàm cũ đã sửa
+
+            // 6. Lưu Tổng tiền và Tiền giảm vào CSDL
+            LuuTongTienVaoHoaDon(this.idHoaDonHienTai, tongCong, soTienGiam);
+        }
+        // (Bên trong class ucBanHang)
+        // === DÁN HÀM MỚI NÀY ===
+        // (Trong file ucBanHang.cs)
+
+        // THAY THẾ HÀM NÀY
+        private void LuuTongTienVaoHoaDon(int hoaDonID, decimal tongTien, decimal giamGia)
+        {
+            // Lấy KhuyenMaiID từ ComboBox
+            int khuyenMaiID = 0;
+            if (cbGiamGia.SelectedItem != null)
+            {
+                GiamGia giamChon = cbGiamGia.SelectedItem as GiamGia;
+                if (giamChon.ID != 0)
+                {
+                    khuyenMaiID = giamChon.ID;
+                }
+            }
+
+            // Cập nhật cả 3 cột
+            string queryCapNhat = "UPDATE HoaDon SET TongTien = @TongTien, GiamGia = @GiamGia, KhuyenMaiID = @KMID WHERE HoaDonID = @HoaDonID";
+
+            using (SqlConnection conn = new SqlConnection(chuoiKetNoi))
+            using (SqlCommand cmd = new SqlCommand(queryCapNhat, conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@HoaDonID", hoaDonID);
+                cmd.Parameters.AddWithValue("@TongTien", tongTien);
+                cmd.Parameters.AddWithValue("@GiamGia", giamGia);
+
+                // Thêm ID khuyến mãi (hoặc NULL nếu không chọn)
+                if (khuyenMaiID == 0)
+                    cmd.Parameters.AddWithValue("@KMID", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@KMID", khuyenMaiID);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
         private void panbh_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
         private void lvGioHang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

@@ -34,7 +34,7 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(70)))), ((int)(((byte)(90)))));
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.btnBack);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -47,11 +47,12 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(70, 14);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(255, 31);
+            this.lblTitle.Size = new System.Drawing.Size(158, 31);
             this.lblTitle.TabIndex = 1;
-            this.lblTitle.Text = "Danh sách ca (Đã đóng)";
+            this.lblTitle.Text = "Danh sách ca";
             // 
             // btnBack
             // 
@@ -66,12 +67,14 @@
             // 
             // panelFilter
             // 
+            this.panelFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(52)))), ((int)(((byte)(71)))));
             this.panelFilter.Controls.Add(this.btnTimKiem);
             this.panelFilter.Controls.Add(this.dtpKetThuc);
             this.panelFilter.Controls.Add(this.label2);
             this.panelFilter.Controls.Add(this.dtpBatDau);
             this.panelFilter.Controls.Add(this.label1);
             this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFilter.ForeColor = System.Drawing.Color.White;
             this.panelFilter.Location = new System.Drawing.Point(0, 60);
             this.panelFilter.Name = "panelFilter";
             this.panelFilter.Size = new System.Drawing.Size(1262, 55);
@@ -79,12 +82,15 @@
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Location = new System.Drawing.Point(623, 13);
+            this.btnTimKiem.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnTimKiem.ForeColor = System.Drawing.Color.White;
+            this.btnTimKiem.Location = new System.Drawing.Point(623, 10);
             this.btnTimKiem.Name = "btnTimKiem";
-            this.btnTimKiem.Size = new System.Drawing.Size(121, 29);
+            this.btnTimKiem.Size = new System.Drawing.Size(121, 35);
             this.btnTimKiem.TabIndex = 4;
             this.btnTimKiem.Text = "Tìm kiếm";
-            this.btnTimKiem.UseVisualStyleBackColor = true;
+            this.btnTimKiem.UseVisualStyleBackColor = false;
             // 
             // dtpKetThuc
             // 
@@ -141,6 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(52)))), ((int)(((byte)(71)))));
             this.Controls.Add(this.dgvDanhSachCa);
             this.Controls.Add(this.panelFilter);
             this.Controls.Add(this.panelHeader);

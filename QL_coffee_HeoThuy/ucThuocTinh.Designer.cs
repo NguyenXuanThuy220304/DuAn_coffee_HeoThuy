@@ -44,11 +44,12 @@
             panBaoCao = new Button();
             panQuanLyCa = new Button();
             panel6 = new Panel();
+            btnDangXuat = new Button();
             panThoat = new Panel();
             label20 = new Label();
             btnTroVe = new Button();
             lblChucVu = new Label();
-            btnDangXuat = new Button();
+            label15 = new Label();
             panThuocTinh.SuspendLayout();
             panDM.SuspendLayout();
             panel5.SuspendLayout();
@@ -59,8 +60,10 @@
             // 
             // panThuocTinh
             // 
+            panThuocTinh.BackColor = Color.FromArgb(45, 52, 71);
             panThuocTinh.Controls.Add(panDM);
             panThuocTinh.Controls.Add(panel6);
+            panThuocTinh.Dock = DockStyle.Fill;
             panThuocTinh.Location = new Point(0, 0);
             panThuocTinh.Name = "panThuocTinh";
             panThuocTinh.Size = new Size(1262, 832);
@@ -68,7 +71,7 @@
             // 
             // panDM
             // 
-            panDM.BackColor = SystemColors.AppWorkspace;
+            panDM.BackColor = Color.FromArgb(45, 52, 71);
             panDM.Controls.Add(label16);
             panDM.Controls.Add(label18);
             panDM.Controls.Add(panThucDon);
@@ -82,6 +85,8 @@
             // 
             // label16
             // 
+            label16.BackColor = SystemColors.ControlLight;
+            label16.ForeColor = Color.Black;
             label16.Location = new Point(864, 597);
             label16.Name = "label16";
             label16.Size = new Size(171, 22);
@@ -90,6 +95,8 @@
             // 
             // label18
             // 
+            label18.BackColor = SystemColors.ControlLight;
+            label18.ForeColor = Color.Black;
             label18.Location = new Point(444, 597);
             label18.Name = "label18";
             label18.Size = new Size(195, 22);
@@ -98,40 +105,52 @@
             // 
             // panThucDon
             // 
+            panThucDon.BackColor = SystemColors.ControlLight;
+            panThucDon.FlatAppearance.BorderColor = Color.Gray;
+            panThucDon.FlatStyle = FlatStyle.Flat;
             panThucDon.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            panThucDon.ForeColor = Color.Black;
             panThucDon.Location = new Point(848, 547);
             panThucDon.Name = "panThucDon";
             panThucDon.Size = new Size(408, 105);
             panThucDon.TabIndex = 1;
             panThucDon.Text = "Thực đơn";
             panThucDon.TextAlign = ContentAlignment.TopLeft;
-            panThucDon.UseVisualStyleBackColor = true;
+            panThucDon.UseVisualStyleBackColor = false;
             // 
             // panChuongTrinh
             // 
+            panChuongTrinh.BackColor = SystemColors.ControlLight;
+            panChuongTrinh.FlatAppearance.BorderColor = Color.Gray;
+            panChuongTrinh.FlatStyle = FlatStyle.Flat;
             panChuongTrinh.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            panChuongTrinh.ForeColor = Color.Black;
             panChuongTrinh.Location = new Point(426, 547);
             panChuongTrinh.Name = "panChuongTrinh";
             panChuongTrinh.Size = new Size(408, 105);
             panChuongTrinh.TabIndex = 1;
             panChuongTrinh.Text = "Chương trình bán hàng";
             panChuongTrinh.TextAlign = ContentAlignment.TopLeft;
-            panChuongTrinh.UseVisualStyleBackColor = true;
+            panChuongTrinh.UseVisualStyleBackColor = false;
             // 
             // panTaoTaiKhoan
             // 
+            panTaoTaiKhoan.BackColor = SystemColors.ControlLight;
+            panTaoTaiKhoan.FlatAppearance.BorderColor = Color.Gray;
+            panTaoTaiKhoan.FlatStyle = FlatStyle.Flat;
             panTaoTaiKhoan.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            panTaoTaiKhoan.ForeColor = Color.Black;
             panTaoTaiKhoan.Location = new Point(4, 547);
             panTaoTaiKhoan.Name = "panTaoTaiKhoan";
             panTaoTaiKhoan.Size = new Size(408, 105);
             panTaoTaiKhoan.TabIndex = 1;
             panTaoTaiKhoan.Text = "Tạo tài khoản cho nhân viên";
             panTaoTaiKhoan.TextAlign = ContentAlignment.TopLeft;
-            panTaoTaiKhoan.UseVisualStyleBackColor = true;
+            panTaoTaiKhoan.UseVisualStyleBackColor = false;
             // 
             // panel5
             // 
-            panel5.BackColor = SystemColors.ControlLight;
+            panel5.BackColor = Color.FromArgb(55, 62, 81);
             panel5.BackgroundImageLayout = ImageLayout.None;
             panel5.BorderStyle = BorderStyle.Fixed3D;
             panel5.Controls.Add(label19);
@@ -148,6 +167,8 @@
             // 
             // label19
             // 
+            label19.BackColor = SystemColors.ControlLight;
+            label19.ForeColor = Color.Black;
             label19.Location = new Point(843, 209);
             label19.Name = "label19";
             label19.Size = new Size(374, 47);
@@ -158,7 +179,7 @@
             // 
             linkLabel1.AutoSize = true;
             linkLabel1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            linkLabel1.LinkColor = Color.Black;
+            linkLabel1.LinkColor = Color.White;
             linkLabel1.Location = new Point(1087, 500);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(159, 31);
@@ -169,6 +190,8 @@
             // lbltime
             // 
             lbltime.AutoSize = true;
+            lbltime.BackColor = Color.Gainsboro;
+            lbltime.ForeColor = Color.Black;
             lbltime.Location = new Point(844, 93);
             lbltime.Name = "lbltime";
             lbltime.Size = new Size(123, 20);
@@ -178,6 +201,8 @@
             // lblma
             // 
             lblma.AutoSize = true;
+            lblma.BackColor = Color.Gainsboro;
+            lblma.ForeColor = Color.Black;
             lblma.Location = new Point(844, 63);
             lblma.Name = "lblma";
             lblma.Size = new Size(52, 20);
@@ -186,54 +211,79 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BackColor = Color.FromArgb(19, 44, 78);
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
             pictureBox1.Image = Properties.Resources.logo1;
             pictureBox1.Location = new Point(0, -38);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(815, 603);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
             // panBaoCao
             // 
+            panBaoCao.BackColor = SystemColors.ControlLight;
+            panBaoCao.FlatAppearance.BorderColor = Color.Gray;
+            panBaoCao.FlatStyle = FlatStyle.Popup;
             panBaoCao.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            panBaoCao.ForeColor = Color.Black;
             panBaoCao.Location = new Point(830, 166);
             panBaoCao.Name = "panBaoCao";
             panBaoCao.Size = new Size(408, 105);
             panBaoCao.TabIndex = 1;
             panBaoCao.Text = "Báo cáo";
             panBaoCao.TextAlign = ContentAlignment.TopLeft;
-            panBaoCao.UseVisualStyleBackColor = true;
+            panBaoCao.UseVisualStyleBackColor = false;
             // 
             // panQuanLyCa
             // 
+            panQuanLyCa.BackColor = Color.Gainsboro;
+            panQuanLyCa.FlatAppearance.BorderColor = Color.Gray;
+            panQuanLyCa.FlatStyle = FlatStyle.Popup;
             panQuanLyCa.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            panQuanLyCa.ForeColor = Color.Black;
             panQuanLyCa.Location = new Point(830, 23);
             panQuanLyCa.Name = "panQuanLyCa";
             panQuanLyCa.Size = new Size(408, 105);
             panQuanLyCa.TabIndex = 1;
             panQuanLyCa.Text = "Quản lý ca\r\n\r\n";
             panQuanLyCa.TextAlign = ContentAlignment.TopLeft;
-            panQuanLyCa.UseVisualStyleBackColor = true;
+            panQuanLyCa.UseVisualStyleBackColor = false;
             // 
             // panel6
             // 
-            panel6.BackColor = SystemColors.ActiveCaption;
+            panel6.BackColor = Color.FromArgb(60, 70, 90);
             panel6.BorderStyle = BorderStyle.Fixed3D;
             panel6.Controls.Add(btnDangXuat);
             panel6.Controls.Add(panThoat);
             panel6.Controls.Add(btnTroVe);
             panel6.Controls.Add(lblChucVu);
+            panel6.Controls.Add(label15);
             panel6.Dock = DockStyle.Top;
             panel6.Location = new Point(0, 0);
             panel6.Name = "panel6";
             panel6.Size = new Size(1262, 64);
             panel6.TabIndex = 0;
             // 
+            // btnDangXuat
+            // 
+            btnDangXuat.BackColor = Color.FromArgb(70, 80, 100);
+            btnDangXuat.FlatAppearance.BorderSize = 0;
+            btnDangXuat.FlatStyle = FlatStyle.Flat;
+            btnDangXuat.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDangXuat.ForeColor = Color.White;
+            btnDangXuat.Location = new Point(1043, 3);
+            btnDangXuat.Name = "btnDangXuat";
+            btnDangXuat.Size = new Size(121, 54);
+            btnDangXuat.TabIndex = 3;
+            btnDangXuat.Text = "Đăng Xuất";
+            btnDangXuat.UseVisualStyleBackColor = false;
+            btnDangXuat.Click += btnDangXuat_Click;
+            // 
             // panThoat
             // 
-            panThoat.BackColor = SystemColors.ActiveCaption;
+            panThoat.BackColor = Color.FromArgb(60, 70, 90);
             panThoat.BorderStyle = BorderStyle.FixedSingle;
             panThoat.Controls.Add(label20);
             panThoat.Dock = DockStyle.Right;
@@ -242,12 +292,12 @@
             panThoat.Size = new Size(88, 60);
             panThoat.TabIndex = 2;
             panThoat.Click += panThoat_Click;
-            panThoat.Paint += panThoat_Paint;
             // 
             // label20
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label20.ForeColor = Color.White;
             label20.Location = new Point(11, 15);
             label20.Name = "label20";
             label20.Size = new Size(67, 28);
@@ -257,10 +307,12 @@
             // 
             // btnTroVe
             // 
-            btnTroVe.BackColor = SystemColors.ActiveCaption;
+            btnTroVe.BackColor = Color.FromArgb(60, 70, 90);
             btnTroVe.Dock = DockStyle.Left;
+            btnTroVe.FlatAppearance.BorderSize = 0;
+            btnTroVe.FlatStyle = FlatStyle.Flat;
             btnTroVe.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            btnTroVe.ForeColor = SystemColors.ControlText;
+            btnTroVe.ForeColor = Color.White;
             btnTroVe.Location = new Point(0, 0);
             btnTroVe.Name = "btnTroVe";
             btnTroVe.Size = new Size(76, 60);
@@ -273,21 +325,23 @@
             // 
             lblChucVu.AutoSize = true;
             lblChucVu.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            lblChucVu.Location = new Point(82, 18);
+            lblChucVu.ForeColor = Color.White;
+            lblChucVu.Location = new Point(193, 18);
             lblChucVu.Name = "lblChucVu";
-            lblChucVu.Size = new Size(105, 25);
+            lblChucVu.Size = new Size(51, 25);
             lblChucVu.TabIndex = 0;
-            lblChucVu.Text = "Chức vụ:";
+            lblChucVu.Text = "N/A";
             // 
-            // btnDangXuat
+            // label15
             // 
-            btnDangXuat.Location = new Point(1043, 3);
-            btnDangXuat.Name = "btnDangXuat";
-            btnDangXuat.Size = new Size(121, 54);
-            btnDangXuat.TabIndex = 3;
-            btnDangXuat.Text = "Đăng Xuất";
-            btnDangXuat.UseVisualStyleBackColor = true;
-            btnDangXuat.Click += btnDangXuat_Click;
+            label15.AutoSize = true;
+            label15.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            label15.ForeColor = Color.White;
+            label15.Location = new Point(82, 18);
+            label15.Name = "label15";
+            label15.Size = new Size(105, 25);
+            label15.TabIndex = 0;
+            label15.Text = "Chức vụ:";
             // 
             // ucThuocTinh
             // 
@@ -332,5 +386,6 @@
         private Label lblChucVu;
         private Button panQuanLyCa;
         private Button btnDangXuat;
+        private Label label15;
     }
 }

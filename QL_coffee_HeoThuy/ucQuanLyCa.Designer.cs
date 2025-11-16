@@ -2,30 +2,10 @@
 {
     partial class ucQuanLyCa
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        protected override void Dispose(bool disposing) { /* ... */ }
 
         #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             panelHeader = new Panel();
@@ -35,7 +15,6 @@
             btnXemDanhSach = new Button();
             btnDongCa = new Button();
             panelShiftInfo = new Panel();
-            lnkChiTietCa = new LinkLabel();
             lblGioDongCa = new Label();
             label7 = new Label();
             lblGioMoCa = new Label();
@@ -46,25 +25,24 @@
             lblMaCa = new Label();
             label3 = new Label();
             lblOpenShiftsTitle = new Label();
-            tabControlMain = new TabControl();
+            tabPageThuChi = new TabPage();
             tabPageDonHang = new TabPage();
             dgvDonHang = new DataGridView();
-            tabPageThuChi = new TabPage();
-            tabPageThanhToanNo = new TabPage();
+            tabControlMain = new TabControl();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
             splitContainerMain.SuspendLayout();
             panelShiftInfo.SuspendLayout();
-            tabControlMain.SuspendLayout();
             tabPageDonHang.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDonHang).BeginInit();
+            tabControlMain.SuspendLayout();
             SuspendLayout();
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = SystemColors.ActiveCaption;
+            panelHeader.BackColor = Color.FromArgb(60, 70, 90);
             panelHeader.Controls.Add(lblTitle);
             panelHeader.Controls.Add(btnBack);
             panelHeader.Dock = DockStyle.Top;
@@ -77,6 +55,7 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(558, 15);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(125, 31);
@@ -102,14 +81,17 @@
             // 
             // splitContainerMain.Panel1
             // 
+            splitContainerMain.Panel1.BackColor = Color.FromArgb(45, 52, 71);
             splitContainerMain.Panel1.Controls.Add(btnXemDanhSach);
             splitContainerMain.Panel1.Controls.Add(btnDongCa);
             splitContainerMain.Panel1.Controls.Add(panelShiftInfo);
             splitContainerMain.Panel1.Controls.Add(lblOpenShiftsTitle);
+            splitContainerMain.Panel1.ForeColor = Color.White;
             splitContainerMain.Panel1.Padding = new Padding(10);
             // 
             // splitContainerMain.Panel2
             // 
+            splitContainerMain.Panel2.BackColor = Color.FromArgb(45, 52, 71);
             splitContainerMain.Panel2.Controls.Add(tabControlMain);
             splitContainerMain.Size = new Size(1262, 772);
             splitContainerMain.SplitterDistance = 420;
@@ -118,6 +100,7 @@
             // btnXemDanhSach
             // 
             btnXemDanhSach.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btnXemDanhSach.ForeColor = Color.Black;
             btnXemDanhSach.Location = new Point(13, 477);
             btnXemDanhSach.Name = "btnXemDanhSach";
             btnXemDanhSach.Size = new Size(394, 48);
@@ -129,6 +112,7 @@
             // 
             btnDongCa.BackColor = Color.SandyBrown;
             btnDongCa.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDongCa.ForeColor = Color.Black;
             btnDongCa.Location = new Point(13, 423);
             btnDongCa.Name = "btnDongCa";
             btnDongCa.Size = new Size(394, 48);
@@ -138,8 +122,8 @@
             // 
             // panelShiftInfo
             // 
+            panelShiftInfo.BackColor = Color.FromArgb(55, 62, 81);
             panelShiftInfo.BorderStyle = BorderStyle.FixedSingle;
-            panelShiftInfo.Controls.Add(lnkChiTietCa);
             panelShiftInfo.Controls.Add(lblGioDongCa);
             panelShiftInfo.Controls.Add(label7);
             panelShiftInfo.Controls.Add(lblGioMoCa);
@@ -153,17 +137,6 @@
             panelShiftInfo.Name = "panelShiftInfo";
             panelShiftInfo.Size = new Size(394, 367);
             panelShiftInfo.TabIndex = 1;
-            // 
-            // lnkChiTietCa
-            // 
-            lnkChiTietCa.AutoSize = true;
-            lnkChiTietCa.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            lnkChiTietCa.Location = new Point(280, 335);
-            lnkChiTietCa.Name = "lnkChiTietCa";
-            lnkChiTietCa.Size = new Size(109, 20);
-            lnkChiTietCa.TabIndex = 9;
-            lnkChiTietCa.TabStop = true;
-            lnkChiTietCa.Text = "Chi tiết ca >>>";
             // 
             // lblGioDongCa
             // 
@@ -260,21 +233,19 @@
             lblOpenShiftsTitle.TabIndex = 0;
             lblOpenShiftsTitle.Text = "Danh sách ca đang mở";
             // 
-            // tabControlMain
+            // tabPageThuChi
             // 
-            tabControlMain.Controls.Add(tabPageDonHang);
-            tabControlMain.Controls.Add(tabPageThuChi);
-            tabControlMain.Controls.Add(tabPageThanhToanNo);
-            tabControlMain.Dock = DockStyle.Fill;
-            tabControlMain.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
-            tabControlMain.Location = new Point(0, 0);
-            tabControlMain.Name = "tabControlMain";
-            tabControlMain.SelectedIndex = 0;
-            tabControlMain.Size = new Size(838, 772);
-            tabControlMain.TabIndex = 0;
+            tabPageThuChi.BackColor = Color.FromArgb(55, 62, 81);
+            tabPageThuChi.Location = new Point(4, 32);
+            tabPageThuChi.Name = "tabPageThuChi";
+            tabPageThuChi.Padding = new Padding(3);
+            tabPageThuChi.Size = new Size(830, 736);
+            tabPageThuChi.TabIndex = 1;
+            tabPageThuChi.Text = "Quản lý thu, chi";
             // 
             // tabPageDonHang
             // 
+            tabPageDonHang.BackColor = Color.FromArgb(55, 62, 81);
             tabPageDonHang.Controls.Add(dgvDonHang);
             tabPageDonHang.Location = new Point(4, 32);
             tabPageDonHang.Name = "tabPageDonHang";
@@ -282,7 +253,6 @@
             tabPageDonHang.Size = new Size(830, 736);
             tabPageDonHang.TabIndex = 0;
             tabPageDonHang.Text = "Danh sách đơn hàng";
-            tabPageDonHang.UseVisualStyleBackColor = true;
             // 
             // dgvDonHang
             // 
@@ -298,24 +268,17 @@
             dgvDonHang.Size = new Size(824, 730);
             dgvDonHang.TabIndex = 0;
             // 
-            // tabPageThuChi
+            // tabControlMain
             // 
-            tabPageThuChi.Location = new Point(4, 32);
-            tabPageThuChi.Name = "tabPageThuChi";
-            tabPageThuChi.Padding = new Padding(3);
-            tabPageThuChi.Size = new Size(655, 504);
-            tabPageThuChi.TabIndex = 1;
-            tabPageThuChi.Text = "Quản lý thu, chi";
-            tabPageThuChi.UseVisualStyleBackColor = true;
-            // 
-            // tabPageThanhToanNo
-            // 
-            tabPageThanhToanNo.Location = new Point(4, 32);
-            tabPageThanhToanNo.Name = "tabPageThanhToanNo";
-            tabPageThanhToanNo.Size = new Size(655, 504);
-            tabPageThanhToanNo.TabIndex = 2;
-            tabPageThanhToanNo.Text = "Phiếu thanh toán nợ";
-            tabPageThanhToanNo.UseVisualStyleBackColor = true;
+            tabControlMain.Controls.Add(tabPageDonHang);
+            tabControlMain.Controls.Add(tabPageThuChi);
+            tabControlMain.Dock = DockStyle.Fill;
+            tabControlMain.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+            tabControlMain.Location = new Point(0, 0);
+            tabControlMain.Name = "tabControlMain";
+            tabControlMain.SelectedIndex = 0;
+            tabControlMain.Size = new Size(838, 772);
+            tabControlMain.TabIndex = 0;
             // 
             // ucQuanLyCa
             // 
@@ -334,9 +297,9 @@
             splitContainerMain.ResumeLayout(false);
             panelShiftInfo.ResumeLayout(false);
             panelShiftInfo.PerformLayout();
-            tabControlMain.ResumeLayout(false);
             tabPageDonHang.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvDonHang).EndInit();
+            tabControlMain.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -357,13 +320,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblGioMoCa;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.LinkLabel lnkChiTietCa;
         private System.Windows.Forms.Button btnXemDanhSach;
         private System.Windows.Forms.Button btnDongCa;
-        private System.Windows.Forms.TabControl tabControlMain;
-        private System.Windows.Forms.TabPage tabPageDonHang;
-        private System.Windows.Forms.DataGridView dgvDonHang;
-        private System.Windows.Forms.TabPage tabPageThuChi;
-        private System.Windows.Forms.TabPage tabPageThanhToanNo;
+        private TabControl tabControlMain;
+        private TabPage tabPageDonHang;
+        private DataGridView dgvDonHang;
+        private TabPage tabPageThuChi;
     }
 }

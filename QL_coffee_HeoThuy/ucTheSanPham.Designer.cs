@@ -37,6 +37,7 @@ namespace QL_coffee_HeoThuy
             // 
             // picAnh
             // 
+            picAnh.BackColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             picAnh.BorderStyle = BorderStyle.FixedSingle;
             picAnh.Location = new Point(14, 16);
             picAnh.Margin = new Padding(3, 4, 3, 4);
@@ -49,6 +50,7 @@ namespace QL_coffee_HeoThuy
             // lblTen
             // 
             lblTen.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTen.ForeColor = Color.White;
             lblTen.Location = new Point(-1, 263);
             lblTen.Name = "lblTen";
             lblTen.Size = new Size(294, 29);
@@ -59,7 +61,7 @@ namespace QL_coffee_HeoThuy
             // lblGia
             // 
             lblGia.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblGia.ForeColor = Color.Red;
+            lblGia.ForeColor = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             lblGia.Location = new Point(85, 318);
             lblGia.Name = "lblGia";
             lblGia.Size = new Size(120, 29);
@@ -71,7 +73,7 @@ namespace QL_coffee_HeoThuy
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
+            BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(62)))), ((int)(((byte)(81)))));
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(lblGia);
             Controls.Add(lblTen);
